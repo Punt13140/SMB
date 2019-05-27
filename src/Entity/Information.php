@@ -54,4 +54,9 @@ class Information
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return substr($this->description, 0, 20);
+    }
 }

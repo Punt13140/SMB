@@ -19,6 +19,8 @@ easy_admin:
             class: App\Entity\Experience
         Formation:
             class: App\Entity\Formation
+        Information:
+            class: App\Entity\Information
         CurriculumVitae:
             class: App\Entity\CurriculumVitae
             form:  # <-- 'form' is applied to both 'new' and 'edit' views
