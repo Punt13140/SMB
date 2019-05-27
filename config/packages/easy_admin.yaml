@@ -1,0 +1,11 @@
+easy_admin:
+    site_name: 'SMB'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+    entities:
+        Langage:
+            class: App\Entity\Langage
+        Framework:
+            class: App\Entity\Framework
