@@ -7,7 +7,7 @@ easy_admin:
     entities:
         Langage:
             class: App\Entity\Langage
-            form:  
+            form:
                 fields:
                     - libelle
                     - { property: 'frameworks', type_options: { by_reference: false} }
@@ -17,6 +17,8 @@ easy_admin:
             class: App\Entity\VersionFramework
         Experience:
             class: App\Entity\Experience
+        Formation:
+            class: App\Entity\Formation
         CurriculumVitae:
             class: App\Entity\CurriculumVitae
             form:  # <-- 'form' is applied to both 'new' and 'edit' views

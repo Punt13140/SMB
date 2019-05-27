@@ -273,4 +273,14 @@ class CurriculumVitae
 
         return $this;
     }
+
+    public function getFullname(): ?string
+    {
+        return $this->nom.' '.$this->prenom;
+    }
+
+    public function __toString()
+    {
+        return $this->getFullname();
+    }
 }
