@@ -29,13 +29,14 @@ class Framework
     private $langages;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\VersionFramework", mappedBy="framework")
      */
-    private $versions;
+    private $versionFrameworks;
 
     public function __construct()
     {
         $this->langages = new ArrayCollection();
+        $this->versionFrameworks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,14 +87,33 @@ class Framework
         return $this->libelle;
     }
 
-    public function getVersions()
+    /**
+     * @return Collection|VersionFramework[]
+     */
+    public function getVersionFrameworks(): Collection
     {
-        return $this->versions;
+        return $this->versionFrameworks;
     }
 
-    public function setVersions($versions): self
+    public function addVersionFramework(VersionFramework $versionFramework): self
     {
-        $this->versions = $versions;
+        if (!$this->versionFrameworks->contains($versionFramework)) {
+            $this->versionFrameworks[] = $versionFramework;
+            $versionFramework->setFramework($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVersionFramework(VersionFramework $versionFramework): self
+    {
+        if ($this->versionFrameworks->contains($versionFramework)) {
+            $this->versionFrameworks->removeElement($versionFramework);
+            // set the owning side to null (unless already changed)
+            if ($versionFramework->getFramework() === $this) {
+                $versionFramework->setFramework(null);
+            }
+        }
 
         return $this;
     }

@@ -9,3 +9,5 @@ easy_admin:
             class: App\Entity\Langage
         Framework:
             class: App\Entity\Framework
+        VersionFramework:
+            class: App\Entity\VersionFramework
