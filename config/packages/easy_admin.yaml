@@ -5,6 +5,20 @@ easy_admin:
         time:     'H:i'
         datetime: 'd/m/Y H:i:s'
     entities:
+        CurriculumVitae:
+            class: App\Entity\CurriculumVitae
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                fields:
+                    - intitule
+                    - nom
+                    - prenom
+                    - { property: 'dateNaissance', type: 'birthday', label: 'Né(e) le' }
+                    - mail
+                    - adresse
+                    - ville
+                    - numPortable
+                    - { property: 'experiences', type_options: { by_reference: false} }
+                    - { property: 'formations', type_options: { by_reference: false} }
         Langage:
             class: App\Entity\Langage
             form:
@@ -19,17 +33,15 @@ easy_admin:
             class: App\Entity\Experience
         Formation:
             class: App\Entity\Formation
-        Information:
-            class: App\Entity\Information
-        CurriculumVitae:
-            class: App\Entity\CurriculumVitae
             form:  # <-- 'form' is applied to both 'new' and 'edit' views
                 fields:
-                    - intitule
-                    - nom
-                    - prenom
-                    - { property: 'dateNaissance', type: 'birthday', label: 'Né(e) le' }
-                    - mail
-                    - adresse
+                    - libelle
+                    - { property: 'dateDebut', type: 'App\CustomTypeField\CustomDateType', label: 'Date début' }
+                    - { property: 'dateFin', type: 'App\CustomTypeField\CustomDateType', label: 'Date fin' }
+                    - description
                     - ville
-                    - numPortable
+                    - lieu
+        Information:
+            class: App\Entity\Information
+        Ide:
+            class: App\Entity\Ide

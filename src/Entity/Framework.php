@@ -33,10 +33,22 @@ class Framework
      */
     private $versionFrameworks;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Projet", mappedBy="frameworks")
+     */
+    private $projets;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Experience", mappedBy="frameworks")
+     */
+    private $experiences;
+
     public function __construct()
     {
         $this->langages = new ArrayCollection();
         $this->versionFrameworks = new ArrayCollection();
+        $this->projets = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +125,62 @@ class Framework
             if ($versionFramework->getFramework() === $this) {
                 $versionFramework->setFramework(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Projet[]
+     */
+    public function getProjets(): Collection
+    {
+        return $this->projets;
+    }
+
+    public function addProjet(Projet $projet): self
+    {
+        if (!$this->projets->contains($projet)) {
+            $this->projets[] = $projet;
+            $projet->addFramework($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjet(Projet $projet): self
+    {
+        if ($this->projets->contains($projet)) {
+            $this->projets->removeElement($projet);
+            $projet->removeFramework($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->addFramework($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->contains($experience)) {
+            $this->experiences->removeElement($experience);
+            $experience->removeFramework($this);
         }
 
         return $this;

@@ -73,11 +73,17 @@ class CurriculumVitae
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ide", mappedBy="curriculumVitae")
+     */
+    private $ides;
+
     public function __construct()
     {
         $this->experiences = new ArrayCollection();
         $this->formations = new ArrayCollection();
         $this->informations = new ArrayCollection();
+        $this->ides = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -282,5 +288,36 @@ class CurriculumVitae
     public function __toString()
     {
         return $this->getFullname();
+    }
+
+    /**
+     * @return Collection|Ide[]
+     */
+    public function getIdes(): Collection
+    {
+        return $this->ides;
+    }
+
+    public function addIde(Ide $ide): self
+    {
+        if (!$this->ides->contains($ide)) {
+            $this->ides[] = $ide;
+            $ide->setCurriculumVitae($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIde(Ide $ide): self
+    {
+        if ($this->ides->contains($ide)) {
+            $this->ides->removeElement($ide);
+            // set the owning side to null (unless already changed)
+            if ($ide->getCurriculumVitae() === $this) {
+                $ide->setCurriculumVitae(null);
+            }
+        }
+
+        return $this;
     }
 }

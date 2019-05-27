@@ -26,6 +26,11 @@ class Information
      */
     private $curriculumVitae;
 
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $libelleCourt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,5 +63,17 @@ class Information
     public function __toString()
     {
         return substr($this->description, 0, 20);
+    }
+
+    public function getLibelleCourt(): ?string
+    {
+        return $this->libelleCourt;
+    }
+
+    public function setLibelleCourt(string $libelleCourt): self
+    {
+        $this->libelleCourt = $libelleCourt;
+
+        return $this;
     }
 }

@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LangageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ProjetRepository")
  */
-class Langage
+class Projet
 {
     /**
      * @ORM\Id()
@@ -19,24 +19,23 @@ class Langage
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
      */
     private $libelle;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Framework", mappedBy="langages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ide", inversedBy="projet")
      */
-    private $frameworks;
+    private $ide;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Experience", mappedBy="autresLangages")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Framework", inversedBy="projets")
      */
-    private $experiences;
+    private $frameworks;
 
     public function __construct()
     {
         $this->frameworks = new ArrayCollection();
-        $this->experiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,6 +55,18 @@ class Langage
         return $this;
     }
 
+    public function getIde(): ?Ide
+    {
+        return $this->ide;
+    }
+
+    public function setIde(?Ide $ide): self
+    {
+        $this->ide = $ide;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Framework[]
      */
@@ -67,7 +78,6 @@ class Langage
     public function addFramework(Framework $framework): self
     {
         if (!$this->frameworks->contains($framework)) {
-            $framework->addLangage($this);
             $this->frameworks[] = $framework;
         }
 
@@ -78,40 +88,6 @@ class Langage
     {
         if ($this->frameworks->contains($framework)) {
             $this->frameworks->removeElement($framework);
-            $framework->removeLangage($this);
-        }
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->libelle;
-    }
-
-    /**
-     * @return Collection|Experience[]
-     */
-    public function getExperiences(): Collection
-    {
-        return $this->experiences;
-    }
-
-    public function addExperience(Experience $experience): self
-    {
-        if (!$this->experiences->contains($experience)) {
-            $this->experiences[] = $experience;
-            $experience->addAutresLangage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeExperience(Experience $experience): self
-    {
-        if ($this->experiences->contains($experience)) {
-            $this->experiences->removeElement($experience);
-            $experience->removeAutresLangage($this);
         }
 
         return $this;

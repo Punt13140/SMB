@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExperienceRepository")
@@ -32,6 +35,10 @@ class Experience
     private $dateDebut;
 
     /**
+     * @Assert\Expression(
+     *     "this.getDateFin() == null || this.getDateDebut() < this.getDateFin()",
+     *     message="La date de fin doit être après la date de début. Bah ouai."
+     * )
      * @ORM\Column(type="date", nullable=true)
      */
     private $dateFin;
@@ -55,6 +62,22 @@ class Experience
      * @ORM\ManyToOne(targetEntity="App\Entity\CurriculumVitae", inversedBy="experiences")
      */
     private $curriculumVitae;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Framework", inversedBy="experiences")
+     */
+    private $frameworks;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Langage", inversedBy="experiences")
+     */
+    private $autresLangages;
+
+    public function __construct()
+    {
+        $this->frameworks = new ArrayCollection();
+        $this->autresLangages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,5 +183,57 @@ class Experience
     public function __toString()
     {
         return $this->libelle;
+    }
+
+    /**
+     * @return Collection|Framework[]
+     */
+    public function getFrameworks(): Collection
+    {
+        return $this->frameworks;
+    }
+
+    public function addFramework(Framework $framework): self
+    {
+        if (!$this->frameworks->contains($framework)) {
+            $this->frameworks[] = $framework;
+        }
+
+        return $this;
+    }
+
+    public function removeFramework(Framework $framework): self
+    {
+        if ($this->frameworks->contains($framework)) {
+            $this->frameworks->removeElement($framework);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Langage[]
+     */
+    public function getAutresLangages(): Collection
+    {
+        return $this->autresLangages;
+    }
+
+    public function addAutresLangage(Langage $autresLangage): self
+    {
+        if (!$this->autresLangages->contains($autresLangage)) {
+            $this->autresLangages[] = $autresLangage;
+        }
+
+        return $this;
+    }
+
+    public function removeAutresLangage(Langage $autresLangage): self
+    {
+        if ($this->autresLangages->contains($autresLangage)) {
+            $this->autresLangages->removeElement($autresLangage);
+        }
+
+        return $this;
     }
 }

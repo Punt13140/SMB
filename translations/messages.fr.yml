@@ -10,6 +10,7 @@ Version frameworks: Versions
 Num version: Version
 Experience: Expérience Professionnel
 Date debut: Début
+Date début: Début
 Date fin: Fin
 Entreprise: Entreprise
 Lieu: Lieu
@@ -34,3 +35,7 @@ Prenom: Prénom
 Né(e) le: Né(e) le
 Formation: Formation
 Information: Information
+Bah ouai: lol
+Ide: Ide
+Projet: Projet
+Libelle court: Libellé court
