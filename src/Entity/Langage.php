@@ -61,8 +61,8 @@ class Langage
     public function addFramework(Framework $framework): self
     {
         if (!$this->frameworks->contains($framework)) {
-            $this->frameworks[] = $framework;
             $framework->addLangage($this);
+            $this->frameworks[] = $framework;
         }
 
         return $this;

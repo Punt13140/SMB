@@ -7,6 +7,10 @@ easy_admin:
     entities:
         Langage:
             class: App\Entity\Langage
+            form:  
+                fields:
+                    - libelle
+                    - { property: 'frameworks', type_options: { by_reference: false} }
         Framework:
             class: App\Entity\Framework
         VersionFramework:

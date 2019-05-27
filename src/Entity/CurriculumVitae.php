@@ -64,12 +64,12 @@ class CurriculumVitae
     private $dateNaissance;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=false)
+     * @ORM\Column(type="string", length=10)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=false)
+     * @ORM\Column(type="string", length=10)
      */
     private $nom;
 
@@ -203,18 +203,6 @@ class CurriculumVitae
                 $formation->setCurriculumVitae(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getAge(): ?int
-    {
-        return $this->age;
-    }
-
-    public function setAge(int $age): self
-    {
-        $this->age = $age;
 
         return $this;
     }
