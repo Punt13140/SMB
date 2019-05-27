@@ -11,3 +11,17 @@ easy_admin:
             class: App\Entity\Framework
         VersionFramework:
             class: App\Entity\VersionFramework
+        Experience:
+            class: App\Entity\Experience
+        CurriculumVitae:
+            class: App\Entity\CurriculumVitae
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                fields:
+                    - intitule
+                    - nom
+                    - prenom
+                    - { property: 'dateNaissance', type: 'birthday', label: 'Né(e) le' }
+                    - mail
+                    - adresse
+                    - ville
+                    - numPortable
